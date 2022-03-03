@@ -3,8 +3,11 @@ package com.example.myfirstcompose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.Vertical
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,49 +22,60 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProfilePage(){
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize(),
-        )
+    Card(elevation = 4.dp, modifier = Modifier
+        .fillMaxSize()
+        .padding(top = 150.dp, bottom = 150.dp, start = 16.dp, end = 16.dp)
+        .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(30.dp))
+    )
     {
-       Image(painter = painterResource(id = R.drawable.ifeanyi),
-           contentDescription = "profile photo",
-           modifier = Modifier
-               .size(100.dp)
-               .clip(CircleShape)
-               .border(width = 2.dp, color = Color.Red, shape = CircleShape),
-           contentScale = ContentScale.Crop
-           ) // handles the image
-       
-       Text(text = "Ifeanyi Achufusi")
-       Text(text = "Android Developer")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
 
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly)
+        )
         {
-             ProfileStats(title = "Followers", count = "150")
-             ProfileStats(title = "Following", count = "100")
-             ProfileStats(title = "Posts", count = "30")
+            Image(painter = painterResource(id = R.drawable.ifeanyi),
+                contentDescription = "profile photo",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .border(width = 2.dp, color = Color.Red, shape = CircleShape)
+                    .padding(top = 16.dp),
+                contentScale = ContentScale.Crop
+            ) // handles the image
 
-        } // handles the rows for following, follower, posts
+            Text(text = "Ifeanyi Achufusi")
+            Text(text = "Android Developer")
 
-        Row (modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly)
-        {
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Follow User")
-            }
-            
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Direct message")
-            }
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly)
+            {
+                ProfileStats(title = "Followers", count = "150")
+                ProfileStats(title = "Following", count = "100")
+                ProfileStats(title = "Posts", count = "30")
 
-        } // HANDLES THE BUTTONS
+            } // handles the rows for following, follower, posts
 
-    } // vertically stack the views on top of each other. MAIN COLUMN
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly)
+            {
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Follow User")
+                }
+
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Direct message")
+                }
+
+            } // HANDLES THE BUTTONS
+
+        } // vertically stack the views on top of each other. MAIN COLUMN
+
+    } // CARD PROFILE
 }
 
 // a function that handles duplicated code snippet
