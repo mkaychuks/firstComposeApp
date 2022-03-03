@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfilePage(){
     Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         )
     {
        Image(painter = painterResource(id = R.drawable.ifeanyi),
@@ -34,28 +35,42 @@ fun ProfilePage(){
        Text(text = "Ifeanyi Achufusi")
        Text(text = "Android Developer")
 
-        Row (modifier = Modifier.fillMaxWidth()
+        Row (modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "150", fontWeight = FontWeight.Bold)
-                Text(text = "Followers")
-            } // handles the different columns in the row
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "100", fontWeight = FontWeight.Bold)
-                Text(text = "Following")
-            } // handles the different columns in the row
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "300", fontWeight = FontWeight.Bold)
-                Text(text = "Posts")
-            } // handles the different columns in the row
+             ProfileStats(title = "Followers", count = "150")
+             ProfileStats(title = "Following", count = "100")
+             ProfileStats(title = "Posts", count = "30")
 
         } // handles the rows for following, follower, posts
 
+        Row (modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly)
+        {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Follow User")
+            }
+            
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Direct message")
+            }
+
+        } // HANDLES THE BUTTONS
+
     } // vertically stack the views on top of each other. MAIN COLUMN
+}
+
+// a function that handles duplicated code snippet
+@Composable
+fun ProfileStats(title: String, count: String){
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = count, fontWeight = FontWeight.Bold)
+        Text(text = title)
+    }
 }
 
 
