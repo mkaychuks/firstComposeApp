@@ -62,11 +62,17 @@ fun ProfilePage(){
                 .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly)
             {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { /*TODO*/ }, modifier = Modifier.border(width = 1.dp,
+                    color = Color.Transparent ,
+                    shape= RoundedCornerShape(2.dp)))
+                {
                     Text(text = "Follow User")
                 }
 
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { /*TODO*/ }, modifier = Modifier.border(width = 1.dp,
+                    color = Color.Transparent ,
+                    shape= RoundedCornerShape(5.dp)))
+                {
                     Text(text = "Direct message")
                 }
 
