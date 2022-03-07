@@ -18,37 +18,57 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 
 @Composable
 fun ProfilePage(){
     Card(elevation = 4.dp, modifier = Modifier
         .fillMaxSize()
-        .padding(top = 150.dp, bottom = 150.dp, start = 16.dp, end = 16.dp)
-        .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(30.dp))
-    )
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        .padding()
+        .border(width = 2.dp, color = Color.White, shape = RoundedCornerShape(30.dp))
+    ){
+        ConstraintLayout{
+            val(image, nameText, countryText, rowStats, buttonFollow, buttonMessage) = createRefs()
 
-        )
-        {
+            val guideLine = createGuidelineFromTop(0.1f)
+
             Image(painter = painterResource(id = R.drawable.ifeanyi),
                 contentDescription = "profile photo",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape)
                     .border(width = 2.dp, color = Color.Red, shape = CircleShape)
-                    .padding(top = 16.dp),
+                    .padding(top = 16.dp
+                    ).constrainAs(image){
+                        top.linkTo(guideLine)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
                 contentScale = ContentScale.Crop
             ) // handles the image
 
-            Text(text = "Ifeanyi Achufusi")
-            Text(text = "Android Developer")
+            Text(text = "Ifeanyi Achufusi",
+                    modifier = Modifier.constrainAs(nameText){
+                        top.linkTo(image.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                )
+            Text(text = "Android Developer",
+                    modifier = Modifier.constrainAs(countryText){
+                        top.linkTo(nameText.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                )
 
             Row (modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(16.dp)
+                .constrainAs(rowStats){
+                    top.linkTo(countryText.bottom)
+                },
                 horizontalArrangement = Arrangement.SpaceEvenly)
             {
                 ProfileStats(title = "Followers", count = "150")
@@ -57,26 +77,27 @@ fun ProfilePage(){
 
             } // handles the rows for following, follower, posts
 
-            Row (modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly)
+            Button(onClick = { /*TODO*/ },
+                modifier = Modifier.constrainAs(buttonFollow){
+                    top.linkTo(rowStats.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(buttonMessage.start)
+                    width = Dimension.wrapContent
+                })
             {
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.border(width = 1.dp,
-                    color = Color.Transparent ,
-                    shape= RoundedCornerShape(2.dp)))
-                {
-                    Text(text = "Follow User")
-                }
+                Text(text = "Follow User")
+            }
 
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.border(width = 1.dp,
-                    color = Color.Transparent ,
-                    shape= RoundedCornerShape(5.dp)))
-                {
-                    Text(text = "Direct message")
-                }
-
-            } // HANDLES THE BUTTONS
+            Button(onClick = { /*TODO*/ },
+                modifier = Modifier.constrainAs(buttonMessage){
+                    top.linkTo(rowStats.bottom, margin = 16.dp)
+                    start.linkTo(buttonFollow.end)
+                    end.linkTo(parent.end)
+                    width = Dimension.wrapContent
+                })
+            {
+                Text(text = "Direct message")
+            }
 
         } // vertically stack the views on top of each other. MAIN COLUMN
 
