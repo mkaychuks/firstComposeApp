@@ -9,7 +9,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -19,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 
 @Composable
 fun Greeting(){
@@ -30,11 +31,14 @@ fun Greeting(){
             .padding(top = 150.dp, bottom = 150.dp, start = 16.dp, end = 16.dp)
             .fillMaxSize()
     ) {
-        // the root column starts here
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+        // the root CONSTRAINT-LAYOUT starts here
+        ConstraintLayout{
+
+            val (image, nameText, occupationText, rowStats, buttonCoffee, buttonFollow) = createRefs()
+            val guideLine = createGuidelineFromTop(30.dp)
+
+
+
             Image(painter = painterResource(id = R.drawable.ifeanyi),
                 contentDescription = "Ifeanyi",
                 contentScale = ContentScale.Crop,
@@ -42,12 +46,27 @@ fun Greeting(){
                     .size(100.dp)
                     .clip(CircleShape)
                     .border(width = 5.dp, shape = CircleShape, color = Color.Red)
+                    .constrainAs(image){
+                        top.linkTo(guideLine)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
             ) // profile image
             Text(text = "Achufusi Ifeanyi",
-                fontSize = 13.sp
+                fontSize = 13.sp,
+                modifier = Modifier.constrainAs(nameText){
+                    top.linkTo(image.bottom, margin = 8.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
             ) // profile name
             Text(text = "Android Developer",
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.constrainAs(occupationText){
+                    top.linkTo(nameText.bottom)
+                    start.linkTo(nameText.start)
+                    end.linkTo(nameText.end)
+                }
             ) // Profile occupation
 
             // row that contains the following, followers, posts etc. BEGIN
@@ -56,6 +75,11 @@ fun Greeting(){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+                    .constrainAs(rowStats){
+                        top.linkTo(occupationText.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
             ) {
                 // column for following, followers, posts
                 Column() {
@@ -73,19 +97,27 @@ fun Greeting(){
             } // row that contains the following, followers, posts etc. END
 
             // Row that houses the buttons START
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Follow")
-                }
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Buy a Cup of Coffee")
-                }
-            } // Row that houses the buttons ENDS
+
+            Button(onClick = { /*TODO*/ },
+                    modifier = Modifier.constrainAs(buttonFollow){
+                        start.linkTo(parent.start)
+                        end.linkTo(buttonCoffee.start)
+                        top.linkTo(rowStats.bottom)
+                        width = Dimension.wrapContent
+                    }
+                ) {
+                Text(text = "Follow")
+            }
+            Button(onClick = { /*TODO*/ },
+                    modifier = Modifier.constrainAs(buttonCoffee){
+                        start.linkTo(buttonFollow.end)
+                        end.linkTo(parent.end)
+                        top.linkTo(rowStats.bottom)
+                        width = Dimension.wrapContent
+                    }
+                ) {
+                Text(text = "Buy a Cup of Coffee")
+            }
 
         } // the root column ends here
 
