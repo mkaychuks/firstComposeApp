@@ -106,9 +106,9 @@ private fun portraitConstraints(margin: Dp): ConstraintSet {
         val rowStats = createRefFor("rowStats")
         val buttonFollow = createRefFor("buttonFollow")
         val buttonMessage = createRefFor("buttonMessage")
-        val guideLine = createGuidelineFromTop(0.3f)
+        val guideLine = createGuidelineFromTop(0.1f)
         constrain(image){
-            top.linkTo(parent.top)
+            top.linkTo(guideLine)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         }
@@ -151,7 +151,7 @@ private fun landscapeConstraints(margin: Dp): ConstraintSet {
         val buttonMessage = createRefFor("buttonMessage")
         val guideLine = createGuidelineFromTop(0.1f)
         constrain(image){
-            top.linkTo(guideline)
+            top.linkTo(guideLine)
             start.linkTo(parent.start, margin = margin)
             end.linkTo(parent.end)
         }
