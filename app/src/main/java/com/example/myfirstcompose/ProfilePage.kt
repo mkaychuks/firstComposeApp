@@ -8,7 +8,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+
 
 @Composable
 fun ProfilePage(){
@@ -187,8 +193,41 @@ private fun landscapeConstraints(margin: Dp): ConstraintSet {
 }
 
 
+@Composable
+fun stateManagement(name: String){
+    var nameState by remember{
+        mutableStateOf("")
+    }
+
+    var name by remember {
+        mutableStateOf("")
+    }
+
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center){
+
+            Text(text = "Hello $name")
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TextField(value = nameState, onValueChange = {
+                    nameState = it
+            })
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(onClick = {
+                     name = nameState
+            }, modifier = Modifier.padding(top = 8.dp)) {
+                Text(text = "Display")
+            }
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun Preview(){
-    ProfilePage()
+    //ProfilePage()
+    stateManagement(name = "Android")
 }
