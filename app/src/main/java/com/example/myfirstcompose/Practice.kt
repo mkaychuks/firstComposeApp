@@ -166,24 +166,49 @@ fun statelessManagement(){
         mutableStateOf("")
     }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
-    ){
-        Text(text = "Hello $name")
-        Spacer(modifier = Modifier.height(8.dp))
+    BoxWithConstraints {
 
-        TextField(value = nameState, onValueChange = {
+        val constraints = constraintsMode()
+
+        ConstraintLayout(constraints){
+            Text(text = "Hello $name", modifier = Modifier.layoutId("nameText"))
+
+            TextField(value = nameState, onValueChange = {
                 nameState = it
-        })
+            }, modifier = Modifier.layoutId("textField"))
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = {
-            name = nameState
-        }) {
-            Text(text = "Display")
+            Button(onClick = {
+                name = nameState
+            }, modifier = Modifier.layoutId("buttonDisplay")) {
+                Text(text = "Display")
+            }
+        }
+    }
+
+}
+
+
+private fun constraintsMode(): ConstraintSet{
+    return ConstraintSet {
+        val nameText = createRefFor("nameText")
+        val textField = createRefFor("textField")
+        val buttonDisplay = createRefFor("buttonDisplay")
+        val guideLine = createGuidelineFromTop(0.2f)
+        constrain(nameText){
+            top.linkTo(guideLine, margin = 8.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        }
+        constrain(textField){
+            top.linkTo(nameText.bottom, margin = 8.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        }
+        constrain(buttonDisplay){
+            top.linkTo(textField.bottom, margin = 8.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
         }
     }
 }
