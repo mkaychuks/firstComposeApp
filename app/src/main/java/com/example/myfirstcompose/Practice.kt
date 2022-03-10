@@ -10,6 +10,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -161,12 +162,16 @@ fun statelessManagement(){
         mutableStateOf("")
     }
 
+    var name by rememberSaveable {
+        mutableStateOf("")
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ){
-        Text(text = "Hello")
+        Text(text = "Hello $name")
         Spacer(modifier = Modifier.height(8.dp))
 
         TextField(value = nameState, onValueChange = {
@@ -175,7 +180,9 @@ fun statelessManagement(){
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            name = nameState
+        }) {
             Text(text = "Display")
         }
     }
